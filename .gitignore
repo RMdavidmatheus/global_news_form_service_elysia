@@ -40,3 +40,13 @@ yarn-error.log*
 **/*.log
 package-lock.json
 **/*.bun
+/src/generated/prisma
+
+# prisma generated
+/generated
+
+# prisma db
+/prisma/form_data.db
+
+# env
+.env
