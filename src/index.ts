@@ -69,6 +69,13 @@ const app = new Elysia()
   .get("/", () => "Hello Elysia")
   .listen(3000);
 
+//* Log the service running and the available endpoints
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  `Service running at ${app.server?.url} 🚀🚀🚀`
 );
+
+//* Log the available endpoints
+console.log(`📡 Available endpoints:`)
+app.routes.forEach((route) => {
+  console.log(`🟢 [${route.method}] ${route.path}`);
+});
