@@ -1,6 +1,73 @@
+import cors from "@elysiajs/cors";
+import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+const app = new Elysia()
+
+  //* Middleware to log the request
+  .onRequest(({ request }) => {
+    const { method, url } = request;
+    const start = performance.now();
+    Reflect.set(request, "__startTime", start);
+    console.log(`📥 ${method} ${url}`);
+  })
+
+  //* Middleware to log the response
+  .onAfterHandle(({ request, response }) => {
+    const start = Reflect.get(request, "__startTime" || performance.now());
+    const duration = performance.now() - start;
+    const time =
+      duration > 1000
+        ? `${(duration / 1000).toFixed(2)}s`
+        : `${duration.toFixed(2)}ms`;
+    console.log(
+      `✅ ${request.method} ${request.url} - ${
+        (response as any)?.status ?? 200
+      } - ⏱️ ${time}`
+    );
+  })
+
+  //* Middleware to log the error
+  .onError(({ code, error, request }) => {
+    console.error(`❌ Error en ${request.method} ${request.url} - ${code}`);
+    console.error(error);
+    return {
+      status: "error",
+      message: "message" in error ? error.message : "Unknown error occurred",
+    };
+  })
+
+  //* Swagger documentation
+  .use(
+    swagger({
+      path: "/swagger",
+      documentation: {
+        info: {
+          title: "Global News Form Service",
+          version: "1.0.0",
+        },
+        tags: [
+          {
+            name: "App",
+            description: "This contains the application routes",
+          },
+        ],
+      },
+    })
+  )
+
+  //* Cors middleware
+  .use(
+    cors({
+      origin: ["*"],
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: true,
+      maxAge: 86400,
+    })
+  )
+  .get("/", () => "Hello Elysia")
+  .listen(3000);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
