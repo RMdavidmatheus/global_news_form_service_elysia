@@ -25,8 +25,8 @@ export const assignSectorToPdf = (sector: string): string[] => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'globalnewsglobalmarketing@gmail.com',
-      pass: 'aong yqnj pgki vbgt',
+      user: process.env.EMAIL_AUTH_USER,
+      pass: process.env.EMAIL_AUTH_TOKEN,
     },
   });
 
@@ -97,7 +97,7 @@ const transporter = nodemailer.createTransport({
               </div>
             `,
       attachments: [
-        ...(sectorPdf[0] && sectorPdf[1] !== ''
+        ...(sectorPdf[0] !== '' && sectorPdf[1] !== ''
           ? [
               {
                 filename: sectorPdf[0],

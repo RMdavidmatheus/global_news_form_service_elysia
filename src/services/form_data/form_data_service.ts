@@ -81,9 +81,9 @@ export class FormDataService {
         where: { id: id, isActive: true },
         data: {
           emailClient: body.email_client.toLowerCase(),
-          nameClient: body.name_client.toUpperCase(),
-          nameCompany: body.name_company.toUpperCase(),
-          sectorClient: body.sector_client.toUpperCase(),
+          nameClient: capitalizeFirstLetter(body.name_client),
+          nameCompany: capitalizeFirstLetter(body.name_company),
+          sectorClient: capitalizeFirstLetter(body.sector_client),
           updatedAt: new Date(),
         },
       });
