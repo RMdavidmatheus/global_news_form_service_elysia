@@ -87,7 +87,8 @@ const app = new Elysia()
   //* Form data routes
   .use(formRoutes)
   //* Listen to port 10000
-  .listen(process.env.PORT_APP || 10000);
+  .listen(process.env.PORT_APP || 10000)
+  .get("/", () => "Service running ok 🚀🚀🚀");
 
 //* Log the service running and the available endpoints
 console.log(
