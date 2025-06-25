@@ -2,15 +2,8 @@ import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { formRoutes } from "./routes/form_data/form_data_route";
-import staticPlugin from "@elysiajs/static";
 
 const app = new Elysia()
-
-  //* Static file middleware
-  .use(staticPlugin({
-    prefix: '/swagger',
-    assets: require('path').join(__dirname, '../node_modules/swagger-ui-dist'),
-  }))
 
   //* Middleware to log the request
   .onRequest(({ request }) => {
