@@ -1,6 +1,7 @@
 import cors from "@elysiajs/cors";
 import swagger from "@elysiajs/swagger";
 import { Elysia } from "elysia";
+import { formRoutes } from "./routes/form_data/form_data_route";
 
 const app = new Elysia()
 
@@ -44,8 +45,24 @@ const app = new Elysia()
       documentation: {
         info: {
           title: "Global News Form Service",
-          version: "1.0.0",
+          version: "0.0.1",
+          description: "This API is used to send emails to the clients and save data in the database",
+          contact: {
+            name: "Alejandro Mateus Martinez",
+            url: "https://github.com/RMdavidmatheus/",
+            email: "david.5.12@hotmail.com",
+          },
+          license: {
+            name: "MIT",
+            url: "https://opensource.org/licenses/MIT",
+          },
         },
+        servers: [
+          {
+            url: "http://localhost:3000",
+            description: "Local server",
+          },
+        ],
         tags: [
           {
             name: "App",
@@ -66,8 +83,11 @@ const app = new Elysia()
       maxAge: 86400,
     })
   )
-  .get("/", () => "Hello Elysia")
-  .listen(3000);
+
+  //* Form data routes
+  .use(formRoutes)
+  //* Listen to port 3000
+  .listen(process.env.PORT_APP || 3000);
 
 //* Log the service running and the available endpoints
 console.log(
