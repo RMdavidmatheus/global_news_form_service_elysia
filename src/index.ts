@@ -92,9 +92,6 @@ const app = new Elysia()
   //* Form data routes
   .use(formRoutes)
 
-  //* Health check
-  .get("/", () => "Service running ok 🚀🚀🚀")
-
   //* Head request
   .head("/", () => new Response(null, { status: 200 }))
 
