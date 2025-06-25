@@ -46,7 +46,7 @@ const app = new Elysia()
         info: {
           title: "Global News Form Service",
           version: "0.0.1",
-          description: "Global News Form Service API",
+          description: "This API is used to send emails to the clients and save data in the database",
           contact: {
             name: "Alejandro Mateus Martinez",
             url: "https://github.com/RMdavidmatheus/",
