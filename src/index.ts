@@ -46,7 +46,8 @@ const app = new Elysia()
         info: {
           title: "Global News Form Service",
           version: "0.0.1",
-          description: "This API is used to send emails to the clients and save data in the database",
+          description:
+            "This API is used to send emails to the clients and save data in the database",
           contact: {
             name: "Alejandro Mateus Martinez",
             url: "https://github.com/RMdavidmatheus/",
@@ -61,6 +62,10 @@ const app = new Elysia()
           {
             url: "http://localhost:3000",
             description: "Local server",
+          },
+          {
+            url: "https://global-news-form-service-elysia.onrender.com",
+            description: "Production server",
           },
         ],
         tags: [
@@ -86,17 +91,21 @@ const app = new Elysia()
 
   //* Form data routes
   .use(formRoutes)
+
+  //* Health check
   .get("/", () => "Service running ok 🚀🚀🚀")
+
+  //* Head request
   .head("/", () => new Response(null, { status: 200 }))
+
   //* Listen to port 10000
   .listen(process.env.PORT_APP || 10000);
+
 //* Log the service running and the available endpoints
-console.log(
-  `Service running at ${app.server?.url} 🚀🚀🚀`
-);
+console.log(`Service running at ${app.server?.url} 🚀🚀🚀`);
 
 //* Log the available endpoints
-console.log(`📡 Available endpoints:`)
+console.log(`📡 Available endpoints:`);
 app.routes.forEach((route) => {
   console.log(`🟢 [${route.method}] ${route.path}`);
 });
