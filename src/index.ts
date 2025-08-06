@@ -84,7 +84,7 @@ const app = new Elysia()
       origin: ["*"],
       methods: ["GET", "POST", "PUT", "DELETE"],
       allowedHeaders: ["Content-Type", "Authorization"],
-      credentials: true,
+      credentials: false,
       maxAge: 86400,
     })
   )
