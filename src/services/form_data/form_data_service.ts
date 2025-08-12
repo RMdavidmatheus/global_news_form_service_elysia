@@ -65,7 +65,8 @@ export class FormDataService {
       }
 
       //* Send email
-      await sendEmail(formData.emailClient, formData.sectorClient);
+      //TODO: Se deshabilita el envio de emails en lo que se realizan los portafolios en PDF
+      //await sendEmail(formData.emailClient, formData.sectorClient);
 
       return mapFormData(formData) as FormDataModel;
     } catch (error) {
