@@ -1,4 +1,4 @@
-import XLSX from "xlsx";
+import * as XLSX from "xlsx";
 import { Context } from "elysia";
 import { FormDataModel } from "../../models/form_data/form_data_model";
 import { FormDataService } from "../../services/form_data/form_data_service";
