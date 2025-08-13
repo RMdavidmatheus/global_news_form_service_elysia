@@ -1,3 +1,4 @@
+import XLSX from "xlsx";
 import { Context } from "elysia";
 import { FormDataModel } from "../../models/form_data/form_data_model";
 import { FormDataService } from "../../services/form_data/form_data_service";
@@ -21,6 +22,45 @@ export class FormDataController {
 
       set.status = 200;
       return formData;
+    } catch (error) {
+      console.error("❌ Error getting all form data", error);
+      set.status = 500;
+      throw error;
+    }
+  };
+
+  //* Get all forms to excel
+  getExcel = async ({
+    set,
+  }: Pick<Context, "set">): Promise<Uint8Array | ApiMessage> => {
+    try {
+      const rows: FormDataModel[] = await this.service.getAllFormData();
+
+      if (!rows || rows.length === 0) {
+        set.status = 204;
+        return { message: "The database is empty" };
+      }
+
+      const ws = XLSX.utils.json_to_sheet(rows);
+
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Datos de clientes");
+
+      const buffer = XLSX.write(wb, {
+        type: "buffer",
+        bookType: "xlsx",
+      }) as Buffer;
+
+      const filename = `global_news_form_data_${new Date()
+        .toISOString()
+        .slice(0, 10)}.xlsx`;
+
+      set.status = 200;
+      set.headers["Content-Type"] =
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+      set.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
+
+      return new Uint8Array(buffer);
     } catch (error) {
       console.error("❌ Error getting all form data", error);
       set.status = 500;

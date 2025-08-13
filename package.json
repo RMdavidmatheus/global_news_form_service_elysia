@@ -14,7 +14,8 @@
     "elysia": "latest",
     "luxon": "^3.6.1",
     "nodemailer": "^7.0.3",
-    "prisma": "^6.10.1"
+    "prisma": "^6.10.1",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/luxon": "^3.6.2",
