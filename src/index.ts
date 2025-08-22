@@ -96,7 +96,10 @@ const app = new Elysia()
   .head("/", () => new Response(null, { status: 200 }))
 
   //* Listen to port 10000
-  .listen(process.env.PORT_APP || 10000);
+  .listen({
+    port: process.env.PORT_APP || 3000,
+    hostname: "0.0.0.0",
+  });
 
 //* Log the service running and the available endpoints
 console.log(`Service running at ${app.server?.url} 🚀🚀🚀`);
