@@ -44,6 +44,31 @@ export const formRoutes = new Elysia({ prefix: "/form-data" })
       },
     },
   })
+  .get("/excel", controller.getExcel, {
+    detail: {
+      tags: ["Application"],
+      summary: "Obtener todos los formularios en excel",
+      description: "Retorna un archivo excel con todos los formularios registrados",
+      responses: {
+        200: {
+          description: "Excel file",
+          content: {
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+              schema: t.Object({
+                type: t.Literal("buffer"),
+              }),
+            },
+          },
+        },
+        204: {
+          description: "No content",
+        },
+        500: {
+          description: "Internal server error",
+        },
+      }
+    }
+  })
   //* Get form data by id
   .get("/form", controller.getFormDataById, {
     query: t.Object({
