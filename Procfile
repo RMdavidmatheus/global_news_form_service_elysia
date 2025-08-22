@@ -1,2 +1,2 @@
-release: /app/.bun/bin/bunx prisma migrate deploy && /app/.bun/bin/bunx prisma generate
+release: bun x prisma migrate deploy && bun x prisma generate
 web: bun run src/index.ts
